@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --sidebar-width: 250px;
+        --green: #43a047;
+        --green-light: #81c967;
+        --green-dark: #1b5e20;
+        --page-bg: #f4f1ea;
+      }
+    body {
+      font-family: 'Plus Jakarta Sans', "Segoe UI", sans-serif;
+      background: var(--green);
+      color: #1d2a27
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0; 
+      bottom: 0;
+      width: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      padding: 22px 16px 16px;
+      background: var(--green);
+      color: #fff;
+      z-index: 1040;
+      overflow-y: auto; /*bagian scrol sidebar */
+      transition: transform 0.3s ease;
+
+    }
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 8px 22px;
+      color: #fff;
+      text-decoration: none;
+
+    }
+    .sidebar-brand .logo-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+
+    }
+    .sidebar-brand .logo-box img {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+
+    }
+    .sidebar-brand span {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+
+    }
+    .sidebar .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      margin-bottom: 6px;
+      color: rgba(255, 255, 255, 0.92);
+      border-radius: 999px;
+      font-size: 0.93rem;
+      font-weight: 500;
+      transition: background 0.2s ease, color 0.2s ease;
+
+    }
+    .sidebar .nav-link i {
+      font-size: 1.1rem;
+
+    }
+    .sidebar .nav-link:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+
+    }
+    .sidebar .nav-link.active {
+      background: var(--green-light);
+      color: var(--green-dark);
+      font-weight: 850; /*ketebalan tulisan */
+
+    }
+    .side-divider {
+      height: 1px;
+      margin: 10px 8px 14px;
+      background: rgba(255, 255, 255, 0.25);
+
+    }
+    .main-area {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+      background: var(--page-bg);
+      border-radius: 32px 0 0 32px ;
+      overflow: clip;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 28px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      border-top-left-radius: 32px;
+    }
+    .search-box {
+      position: relative;
+      flex: 1;
+      max-width: 460px;
+
+    }
+    .search-box i {
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      transform: translateY(-50%);
+      color: #8b9a94;
+
+    }
+    .search-box .form-control {
+      height: 46px;
+      padding-left: 44px;
+      border: 1px solid #e6e2d8;
+      border-radius: 999px;
+      background: #fff;
+      font-size: 0.92rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+
+    }
+    .search-box .form-control:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 4px rgba(67, 160, 71, 0.15);
+
+    }
+    .icon-btn {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border: 1px solid #e6e2d8;
+      border-radius: 50%;
+      background: #fff;
+      color: #2f4340;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      transition: background 0.2s ease, transform 0.2s ease;
+
+    }
+    .icon-btn:hover {
+      background: #e8f5e9;
+      transform: translateY(-1px);
+
+    }
+    .icon-btn .badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      min-width: 20px;
+      padding: 3px 5px;
+      border: 2px solid var(--page-bg);
+      background: var(--green) !important;
+      font-size: 0.62rem;
+    }
+    .profile-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 12px 5px 5px; 
+      border: 1px solid #e6e2d8;
+      border-radius: 999px;
+      background: #fff;
+      text-align: left;
+    }
+    .profile-btn .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e6e2d8;;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .profile-btn .name {
+      font-size: 0.85rem;
+      line-height: 1.1;
+      font-weight: 700;
+
+    }
+    .profile-btn .role {
+      font-size: 0.7rem;
+      color: #8b9a94;
+
+    }
+    .sidebar-toggle {
+      display: none;
+    }
+    .sidebar-overlay {
+      display: none;
+
+    }
+    @media (max-width: 991.98px) {
+      .sidebar {
+        transform: translateX(-100%);
+    }
+    .sidebar.show {
+      transform: translateX(0);
+    }
+    .sidebar-overlay.show {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      z-index: 1035;
+    }
+    .main-area {
+      margin-left: 0;
+      border-radius: 0;
+
+    }
+    .topbar {
+      border-top-left-radius: 0;
+
+    }
+    .sidebar-toggle {
+      display: grid;
+
+    }
+    .topbar {
+      padding: 12px 16px;
+
+    }
+  }
+
+
+
+
+    </style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <a href="#" class="sidebar-brand">
+    <div class="logo-box">
+      <img src="logo.svg" alt="Logo Qasir">
+        </div>
+        <span>Qasir</span>
+  </a>
+  <nav class="nav flex-column">
+    <a class="nav-link active" href="#"><i class="bi bi-house"></i>Dashboard</a>
+      <a class="nav-link" href="#"><i class="bi bi-box-seam"></i>Produk</a>
+      <a class="nav-link" href="#"><i class="bi bi-tags"></i>Kategori</a>
+      <a class="nav-link" href="#"><i class="bi bi-cart3"></i>Kasir</a>
+      <a class="nav-link" href="#"><i class="bi bi-clock-history"></i>Riwayat</a>
+      <a class="nav-link" href="#"><i class="bi bi-bar-chart"></i>Laporan</a>
+      </nav>
+     <div class="nav-overlay" id="SidebarOverlay"></div>
+  </aside>
+
+     <div class="main-area">
+      <header class="topbar">
+        <button class="icon-btn sidebar-toggle" id="SidebarToggle" type="button" aria-label="Buka Menu">
+          <i class="bi bi-list"></i>
+        </button>
+        <div class="search-box">
+          <i class="bi bi-search"></i>
+          <input type="text" class="form-control" placeholder="Cari Produk, Transaksi...">
+        </div>
+        <div class="dropdown ms-auto">
+          <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="logo-box"></span>
+              <img src="logo.svg" alt="Profile" class="avatar">
+              <span class="d-none d-md-block">
+                <span class="name d-block">AbibSharimThesa</span>
+                <span class="role d-block">Kasir/admin</span>
+              </span>
+                <i class="bi bi-chevron-down small text-secondary d-none d-md-block"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                  <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profil </a></li>
+                  <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Pengaturan</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
+                </ul>
+                </span>
+          </button>
+        </div>
+      </header>
+      <!-- nanti kalian masukin disini bagian dashboard nya ---- -->
+      <main class="p-4"></main>
+    </div>
+  </nav>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const toggle = document.getElementById('sidebarToggle');
+
+    function togglesidebar(){
+      sidebar.classList.toggle('show');
+      overlay.classList.toggle('show');
+    }
+    
+    toggle.addEventListener('click', togglesidebar);
+    overlay.addEventListener('click', togglesidebar)
+  </script>
+</body>
+</html>

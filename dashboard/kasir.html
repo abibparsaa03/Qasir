@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --sidebar-width: 250px;
+        --green: #43a047;
+        --green-light: #81c967;
+        --green-dark: #1b5e20;
+        --page-bg: #f4f1ea;
+      }
+    body {
+      font-family: 'Plus Jakarta Sans', "Segoe UI", sans-serif;
+      background: var(--green);
+      color: #1d2a27
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0; 
+      bottom: 0;
+      width: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      padding: 22px 16px 16px;
+      background: var(--green);
+      color: #fff;
+      z-index: 1040;
+      overflow-y: auto; /*bagian scrol sidebar */
+      transition: transform 0.3s ease;
+
+    }
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 8px 22px;
+      color: #fff;
+      text-decoration: none;
+
+    }
+    .sidebar-brand .logo-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+
+    }
+    .sidebar-brand .logo-box img {
+      width: 30px;
+      height: 30px;
+      object-fit: cover;
+
+    }
+    .sidebar-brand span {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+
+    }
+    .sidebar .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      margin-bottom: 6px;
+      color: rgba(255, 255, 255, 0.92);
+      border-radius: 999px;
+      font-size: 0.93rem;
+      font-weight: 500;
+      transition: background 0.2s ease, color 0.2s ease;
+
+    }
+    .sidebar .nav-link i {
+      font-size: 1.1rem;
+
+    }
+    .sidebar .nav-link:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+
+    }
+    .sidebar .nav-link.active {
+      background: var(--green-light);
+      color: var(--green-dark);
+      font-weight: 850; /*ketebalan tulisan */
+
+    }
+    .side-divider {
+      height: 1px;
+      margin: 10px 8px 14px;
+      background: rgba(255, 255, 255, 0.25);
+
+    }
+    .main-area {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+      background: var(--page-bg);
+      border-radius: 32px 0 0 32px ;
+      overflow: clip;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1030;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 28px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      border-top-left-radius: 32px;
+    }
+    .search-box {
+      position: relative;
+      flex: 1;
+      max-width: 460px;
+
+    }
+    .search-box i {
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      transform: translateY(-50%);
+      color: #8b9a94;
+
+    }
+    .search-box .form-control {
+      height: 46px;
+      padding-left: 44px;
+      border: 1px solid #e6e2d8;
+      border-radius: 999px;
+      background: #fff;
+      font-size: 0.92rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+
+    }
+    .search-box .form-control:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 4px rgba(67, 160, 71, 0.15);
+
+    }
+    .icon-btn {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border: 1px solid #e6e2d8;
+      border-radius: 50%;
+      background: #fff;
+      color: #2f4340;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      transition: background 0.2s ease, transform 0.2s ease;
+
+    }
+    .icon-btn:hover {
+      background: #e8f5e9;
+      transform: translateY(-1px);
+
+    }
+    .icon-btn .badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      min-width: 20px;
+      padding: 3px 5px;
+      border: 2px solid var(--page-bg);
+      background: var(--green) !important;
+      font-size: 0.62rem;
+    }
+    .profile-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 12px 5px 5px; 
+      border: 1px solid #e6e2d8;
+      border-radius: 999px;
+      background: #fff;
+      text-align: left;
+    }
+    .profile-btn .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e6e2d8;;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+    .profile-btn .name {
+      font-size: 0.85rem;
+      line-height: 1.1;
+      font-weight: 700;
+
+    }
+    .profile-btn .role {
+      font-size: 0.7rem;
+      color: #8b9a94;
+
+    }
+    .sidebar-toggle {
+      display: none;
+    }
+    .sidebar-overlay {
+      display: none;
+
+    }
+    @media (max-width: 991.98px) {
+      .sidebar {
+        transform: translateX(-100%);
+    }
+    .sidebar.show {
+      transform: translateX(0);
+    }
+    .sidebar-overlay.show {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      z-index: 1035;
+    }
+    .main-area {
+      margin-left: 0;
+      border-radius: 0;
+
+    }
+    .topbar {
+      border-top-left-radius: 0;
+
+    }
+    .sidebar-toggle {
+      display: grid;
+
+    }
+    .topbar {
+      padding: 12px 16px;
+
+    }
+  }
+  .page-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .page-head h1 {
+      margin: 0;
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .page-head .crumb {
+      color: #8b9a94;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    .cari-produk {
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .cari-produk i {
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      transform: translateY(-50%);
+      color: #8b9a94;
+    }
+    .cari-produk .form-control {
+      height: 46px;
+      padding-left: 44px;
+      border: 1px solid #e6e2d8;
+      border-radius: 12px;
+      background: #fff;
+      font-size: 0.92rem;
+    }
+    .cari-produk .form-control:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 4px rgba(67, 160, 71, 0.15);
+    }
+    .sub-judul {
+      display: flex;
+      align-items: center;
+      height: 46px;
+      margin: 0 0 16px;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .tbl-wrap {
+      background: #fff;
+      border: 1px solid #e6e2d8;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .tbl {
+      margin: 0;
+      --bs-table-bg: transparent;
+    }
+    .tbl th {
+      padding: 12px 16px;
+      background: #f6f9f7;
+      border-bottom: 1px solid #e6e2d8;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #5c6b64;
+    }
+    .tbl td {
+      padding: 12px 16px;
+      vertical-align: middle;
+      border-color: #eef0ec;
+      font-size: 0.92rem;
+    }
+    .tbl .kosong {
+      padding: 26px 16px;
+      text-align: center;
+      color: #8b9a94;
+    }
+    .btn-tambah {
+      padding: 5px 14px;
+      border: 1px solid var(--green);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--green);
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .btn-tambah:hover {
+      background: var(--green);
+      color: #fff;
+    }
+    .qty {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #e6e2d8;
+      border-radius: 999px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .qty button {
+      width: 28px;
+      height: 28px;
+      border: 0;
+      background: transparent;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .qty button:hover {
+      background: #e8f5e9;
+      color: var(--green-dark);
+    }
+    .qty input {
+      width: 36px;
+      border: 0;
+      outline: 0;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      moz-appearance: textfield;
+    }
+    .qty input::-webkit-outer-spin-button,
+    .qty input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .total-row {
+      margin: 18px 0 14px;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .btn-simpan {
+      height: 52px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--green);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      box-shadow: 0 8px 16px rgba(38, 143, 87, 0.22);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .btn-simpan:hover:not(:disabled) {
+      background: #388e3c;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .btn-simpan:disabled {
+      background: #a5d6a7;
+      color: #fff;
+      box-shadow: none;
+    }
+    @media (max-width: 575.98px) {
+      .page-head { flex-direction: column; gap: 2px; }
+    }
+  
+    </style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+  <a href="#" class="sidebar-brand">
+    <div class="logo-box">
+      <img src="logo.svg" alt="Logo Qasir">
+        </div>
+        <span>Qasir</span>
+  </a>
+  <nav class="nav flex-column">
+    <a class="nav-link active" href="#"><i class="bi bi-house"></i>Dashboard</a>
+      <a class="nav-link" href="#"><i class="bi bi-box-seam"></i>Produk</a>
+      <a class="nav-link" href="#"><i class="bi bi-tags"></i>Kategori</a>
+      <a class="nav-link" href="kasir.html"><i class="bi bi-cart3"></i>Kasir</a>
+      <a class="nav-link" href="#"><i class="bi bi-clock-history"></i>Riwayat</a>
+      <a class="nav-link" href="#"><i class="bi bi-bar-chart"></i>Laporan</a>
+      </nav>
+     <div class="nav-overlay" id="SidebarOverlay"></div>
+  </aside>
+
+     <div class="main-area">
+      <header class="topbar">
+        <button class="icon-btn sidebar-toggle" id="SidebarToggle" type="button" aria-label="Buka Menu">
+          <i class="bi bi-list"></i>
+        </button>
+        <div class="search-box">
+          <i class="bi bi-search"></i>
+          <input type="text" class="form-control" placeholder="Cari Produk, Transaksi...">
+        </div>
+        <div class="dropdown ms-auto">
+          <button class="profile-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="logo-box"></span>
+              <img src="logo.svg" alt="Profile" class="avatar">
+              <span class="d-none d-md-block">
+                <span class="name d-block">AbibSharimThesa</span>
+                <span class="role d-block">Kasir/admin</span>
+              </span>
+                <i class="bi bi-chevron-down small text-secondary d-none d-md-block"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                  <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Profil </a></li>
+                  <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Pengaturan</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Keluar</a></li>
+                </ul>
+                </span>
+          </button>
+        </div>
+      </header>
+      <main class="p-4">
+        <div class="page-head">
+          <h1>Kasir / Penjualan</h1>
+          <span class="crumb">Kasir/Admin - Halaman 4</span>
+        </div>
+ 
+        <div class="row g-4">
+          <!-- KIRI: daftar produk -->
+          <div class="col-lg-7">
+            <div class="cari-produk">
+              <i class="bi bi-search"></i>
+              <input type="text" id="cariProduk" class="form-control" placeholder="Cari produk..." aria-label="Cari produk">
+            </div>
+            <div class="tbl-wrap">
+              <table class="table tbl">
+                <thead>
+                  <tr><th style="width:52%">Produk</th><th style="width:24%">Harga</th><th class="text-end">Aksi</th></tr>
+                </thead>
+                <tbody id="tbProduk"></tbody>
+              </table>
+            </div>
+          </div>
+ 
+          <!-- KANAN: keranjang -->
+          <div class="col-lg-5">
+            <h2 class="sub-judul">Keranjang</h2>
+            <div class="tbl-wrap">
+              <table class="table tbl">
+                <thead>
+                  <tr><th style="width:38%">Item</th><th style="width:34%">Qty</th><th class="text-end">Subtotal</th></tr>
+                </thead>
+                <tbody id="tbKeranjang"></tbody>
+              </table>
+            </div>
+            <div class="total-row">Total: <span id="totalHarga">Rp 0</span></div>
+            <button type="button" class="btn btn-simpan w-100" id="btnSimpan" disabled>Simpan transaksi</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </nav>
+ 
+  <!-- Notifikasi -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toastInfo" class="toast align-items-center text-bg-success border-0" role="status" aria-live="polite" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body" id="toastPesan"></div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Tutup"></button>
+      </div>
+    </div>
+  </div>
+    </div>
+  </nav>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('SidebarOverlay');
+    const toggle = document.getElementById('SidebarToggle');
+
+    function togglesidebar(){
+      sidebar.classList.toggle('show');
+      overlay.classList.toggle('show');
+    }
+    
+    toggle.addEventListener('click', togglesidebar);
+    overlay.addEventListener('click', togglesidebar)
+  </script>
+  <script>
+    /* ================= KASIR / PENJUALAN ================= */
+ 
+    // Data contoh produk (ganti dengan data dari halaman Produk / database nanti)
+    const PRODUK = [
+      { id: 1,  nama: 'Beras Premium 5 kg', harga: 68000 },
+      { id: 2,  nama: 'Minyak Goreng 1 L',  harga: 18500 },
+      { id: 3,  nama: 'Gula Pasir 1 kg',    harga: 16500 },
+      { id: 4,  nama: 'Teh Botol 350 ml',   harga: 5000 },
+      { id: 5,  nama: 'Air Mineral 600 ml', harga: 3500 },
+      { id: 6,  nama: 'Kopi Sachet',        harga: 2000 },
+      { id: 7,  nama: 'Keripik Kentang',    harga: 12000 },
+      { id: 8,  nama: 'Biskuit Cokelat',    harga: 8500 },
+      { id: 9,  nama: 'Sabun Cuci Piring',  harga: 9500 },
+      { id: 10, nama: 'Tisu Wajah',         harga: 7500 }
+    ];
+ 
+    let keranjang = {};   // { idProduk: jumlah }
+ 
+    const $ = id => document.getElementById(id);
+    const rupiah = n => 'Rp ' + n.toLocaleString('id-ID');
+    const cariProduk = p => PRODUK.find(x => x.id === p);
+ 
+    /* ---- Daftar produk (kiri) ---- */
+    function renderProduk() {
+      const kata = $('cariProduk').value.trim().toLowerCase();
+      const hasil = PRODUK.filter(p => p.nama.toLowerCase().includes(kata));
+ 
+      $('tbProduk').innerHTML = hasil.length
+        ? hasil.map(p => `
+            <tr>
+              <td>${p.nama}</td>
+              <td>${rupiah(p.harga)}</td>
+              <td class="text-end">
+                <button type="button" class="btn-tambah" onclick="tambah(${p.id})">
+                  <i class="bi bi-plus-lg"></i> Tambah
+                </button>
+              </td>
+            </tr>`).join('')
+        : '<tr><td colspan="3" class="kosong">Produk tidak ditemukan.</td></tr>';
+    }
+ 
+    /* ---- Keranjang (kanan) ---- */
+    function renderKeranjang() {
+      const ids = Object.keys(keranjang);
+      let total = 0;
+ 
+      $('tbKeranjang').innerHTML = ids.length
+        ? ids.map(id => {
+            const p = cariProduk(+id);
+            const jml = keranjang[id];
+            const sub = p.harga * jml;
+            total += sub;
+            return `
+              <tr>
+                <td>${p.nama}</td>
+                <td>
+                  <div class="qty">
+                    <button type="button" onclick="ubahQty(${p.id}, -1)" aria-label="Kurangi">-</button>
+                    <input type="number" min="1" value="${jml}" onchange="aturQty(${p.id}, this.value)" aria-label="Jumlah ${p.nama}">
+                    <button type="button" onclick="ubahQty(${p.id}, 1)" aria-label="Tambah">+</button>
+                  </div>
+                </td>
+                <td class="text-end">${rupiah(sub)}</td>
+              </tr>`;
+          }).join('')
+        : '<tr><td colspan="3" class="kosong">Keranjang masih kosong.<br>Klik "+ Tambah" pada produk.</td></tr>';
+ 
+      $('totalHarga').textContent = rupiah(total);
+      $('btnSimpan').disabled = ids.length === 0;
+    }
+ 
+    function tambah(id) {
+      keranjang[id] = (keranjang[id] || 0) + 1;
+      renderKeranjang();
+    }
+ 
+    function ubahQty(id, selisih) {
+      const baru = (keranjang[id] || 0) + selisih;
+      if (baru <= 0) delete keranjang[id];   // jumlah 0 = hapus dari keranjang
+      else keranjang[id] = baru;
+      renderKeranjang();
+    }
+ 
+    function aturQty(id, nilai) {
+      const n = parseInt(nilai, 10);
+      if (isNaN(n) || n <= 0) delete keranjang[id];
+      else keranjang[id] = n;
+      renderKeranjang();
+    }
+ 
+    /* ---- Simpan transaksi ---- */
+    function notif(pesan, warna) {
+      const el = $('toastInfo');
+      el.className = 'toast align-items-center border-0 text-bg-' + (warna || 'success');
+      $('toastPesan').textContent = pesan;
+      bootstrap.Toast.getOrCreateInstance(el, { delay: 3000 }).show();
+    }
+ 
+    function simpanTransaksi() {
+      const ids = Object.keys(keranjang);
+      if (!ids.length) return notif('Keranjang masih kosong.', 'warning');
+ 
+      const item = ids.map(id => {
+        const p = cariProduk(+id);
+        return { nama: p.nama, harga: p.harga, qty: keranjang[id], subtotal: p.harga * keranjang[id] };
+      });
+      const total = item.reduce((a, i) => a + i.subtotal, 0);
+ 
+      // Simpan ke localStorage (nanti bisa dibaca oleh halaman Riwayat)
+      try {
+        const riwayat = JSON.parse(localStorage.getItem('qasirTransaksi')) || [];
+        riwayat.unshift({
+          id: 'TRX-' + String(riwayat.length + 1).padStart(3, '0'),
+          waktu: new Date().toISOString(),
+          item, total
+        });
+        localStorage.setItem('qasirTransaksi', JSON.stringify(riwayat));
+      } catch (e) {}
+ 
+      keranjang = {};
+      renderKeranjang();
+      notif('Transaksi tersimpan. Total ' + rupiah(total));
+    }
+ 
+    $('cariProduk').addEventListener('input', renderProduk);
+    $('btnSimpan').addEventListener('click', simpanTransaksi);
+ 
+    renderProduk();
+    renderKeranjang();
+  </script>
+</body>
+</html>
+ 
+</body>
+</html>

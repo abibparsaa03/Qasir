@@ -3,11 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Login</title>
+    <title>Qasir - Kasir / Penjualan</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --qasir-green: #43a047;
+            --qasir-green-light: #81c96f;
+            --bg-cream: #f4f4ee;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--qasir-green);
+            margin: 0;
+            overflow-x: hidden;
+        }
+        /* Layout Utama Gambar 1 */
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: var(--qasir-green);
+            color: white;
+            padding: 24px 16px;
+        }
+        .main-container {
+            margin-left: 240px;
+            background-color: var(--bg-cream);
+            min-height: 100vh;
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+            padding: 24px 32px;
+        }
+        .nav-link-custom {
+            color: white;
+            opacity: 0.9;
+            padding: 12px 18px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .nav-link-custom.active {
+            background-color: rgba(255, 255, 255, 0.25);
+            font-weight: 700;
+            opacity: 1;
+        }
+        .search-pill {
+            background: white;
+            border-radius: 30px;
+            border: 1px solid #e0e0e0;
+            padding: 8px 20px;
+            width: 320px;
+        }
+        .search-pill input {
+            border: none;
+            outline: none;
+            width: 100%;
+            background: transparent;
+        }
+        .card-custom {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e8e8e8;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-    <script>
-        window.location.href = "dashboard/login.html";
-    </script>
+
+    <!-- SIDEBAR KIRI (Presisi Gambar 1) -->
+    <div class="sidebar">
+        <div class="d-flex align-items-center gap-2 mb-4 px-2">
+            <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
+                <path d="M50 76C35.6406 76 24 64.3594 24 50C24 35.6406 35.6406 24 50 24C60.2188 24 69.0469 29.8906 73.1875 38.3594" stroke="#81c96f" stroke-width="12" stroke-linecap="round"/>
+                <path d="M60 48L78 26H88L71 52" fill="#81c96f"/>
+            </svg>
+            <span class="fs-4 fw-bold">Qasir</span>
+        </div>
+        <div class="nav flex-column">
+            <a href="#" class="nav-link-custom"><i class="bi bi-house-door"></i> Dashboard</a>
+            <a href="#" class="nav-link-custom"><i class="bi bi-box-seam"></i> Produk</a>
+            <a href="#" class="nav-link-custom"><i class="bi bi-tag"></i> Kategori</a>
+            <a href="#" class="nav-link-custom active"><i class="bi bi-cart"></i> Kasir</a>
+            <a href="#" class="nav-link-custom"><i class="bi bi-clock-history"></i> Riwayat</a>
+            <a href="#" class="nav-link-custom"><i class="bi bi-bar-chart"></i> Laporan</a>
+        </div>
+    </div>
+
+    <!-- AREA KONTEN UTAMA -->
+    <div class="main-container">
+        
+        <!-- TOP NAVBAR (Gambar 1) -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="search-pill d-flex align-items-center gap-2">
+                <i class="bi bi-search text-muted"></i>
+                <input type="text" placeholder="Cari Produk, Transaksi...">
+            </div>
+            <div class="d-flex align-items-center gap-2 bg-white rounded-pill px-3 py-1 border">
+                <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center" style="width:32px; height:32px; font-weight:bold;">A</div>
+                <div class="text-end" style="line-height:1.2;">
+                    <span class="d-block fw-bold small">AbibSharimThesa</span>
+                    <small class="text-muted" style="font-size:11px;">Kasir/admin</small>
+                </div>
+                <i class="bi bi-chevron-down small text-muted ms-1"></i>
+            </div>
+        </div>
+
+        <!-- LAYOUT TRANSAKSI KASIR (Wireframe Gambar 2) -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold m-0">Kasir / Penjualan</h4>
+            <span class="text-muted small">Kasir/Admin - Halaman 4</span>
+        </div>
+
+        <div class="row g-4">
+            <!-- Kolom Kiri: Daftar Produk -->
+            <div class="col-lg-7">
+                <div class="card-custom">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Cari produk...">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Produk</th>
+                                    <th>Harga</th>
+                                    <th class="text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Minyak Goreng 2L</td>
+                                    <td>Rp 34.000</td>
+                                    <td class="text-center"><button class="btn btn-sm btn-outline-success rounded-pill px-3">+ Tambah</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Gula Pasir 1kg</td>
+                                    <td>Rp 15.000</td>
+                                    <td class="text-center"><button class="btn btn-sm btn-outline-success rounded-pill px-3">+ Tambah</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Beras Premium 5kg</td>
+                                    <td>Rp 72.000</td>
+                                    <td class="text-center"><button class="btn btn-sm btn-outline-success rounded-pill px-3">+ Tambah</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kolom Kanan: Keranjang & Checkout -->
+            <div class="col-lg-5">
+                <div class="card-custom">
+                    <h5 class="fw-bold mb-3">Keranjang</h5>
+                    <table class="table align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Item</th>
+                                <th class="text-center">Qty</th>
+                                <th class="text-end">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Minyak Goreng 2L</td>
+                                <td class="text-center"><input type="number" value="2" class="form-control form-control-sm text-center mx-auto" style="width: 50px;"></td>
+                                <td class="text-end fw-bold">Rp 68.000</td>
+                            </tr>
+                            <tr>
+                                <td>Gula Pasir 1kg</td>
+                                <td class="text-center"><input type="number" value="1" class="form-control form-control-sm text-center mx-auto" style="width: 50px;"></td>
+                                <td class="text-end fw-bold">Rp 15.000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="d-flex justify-content-between align-items-center border-top pt-3 my-3">
+                        <span class="fs-5 fw-bold">Total:</span>
+                        <span class="fs-4 fw-bold text-success">Rp 83.000</span>
+                    </div>
+
+                    <button class="btn w-100 text-white fw-bold py-2 rounded-3" style="background-color: var(--qasir-green);">Simpan transaksi</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </body>
 </html>
